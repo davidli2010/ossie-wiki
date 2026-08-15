@@ -1,0 +1,662 @@
+// file: cli_cli_main.go.txt
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package main
+
+import (
+	"os"
+
+	"github.com/apache/ossie/cli/cmd"
+)
+
+// version, commit, and date are set at build time by GoReleaser via ldflags.
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
+func main() {
+	cmd.SetVersion(version)
+	if err := cmd.Execute(); err != nil {
+		os.Exit(1)
+	}
+}
+// file: cli_cli_cmd_root.go.txt
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package cmd
+
+import (
+	"github.com/apache/ossie/cli/cmd/plugin"
+	"github.com/apache/ossie/cli/internal/ossiedir"
+	"github.com/spf13/cobra"
+)
+
+var rootCmd = &cobra.Command{
+	Use:   "ossie",
+	Short: "Apache Ossie (incubating) CLI",
+	Long:  `ossie is the command-line tool for the Apache Ossie (incubating) project.`,
+	// NOTE: Cobra does NOT automatically chain PersistentPreRunE from parent to
+	// child. If any subcommand defines its own PersistentPreRunE or PreRunE, this
+	// function will not run for that subcommand. Future subcommands that define
+	// their own must call ossiedir.EnsurePluginDir() explicitly.
+	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+		return ossiedir.EnsurePluginDir()
+	},
+}
+
+// Execute runs the root command. Called by main.
+func Execute() error {
+	return rootCmd.Execute()
+}
+
+// SetVersion sets the version string reported by `ossie --version`.
+func SetVersion(v string) {
+	rootCmd.Version = v
+}
+
+func init() {
+	rootCmd.PersistentFlags().BoolP("verbose", "v", false, "Enable verbose output (shows plugin stderr)")
+
+	rootCmd.AddCommand(convertCmd)
+	rootCmd.AddCommand(validateCmd)
+	rootCmd.AddCommand(plugin.Cmd)
+}
+// file: cli_cli_cmd_convert.go.txt
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package cmd
+
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
+
+var convertCmd = &cobra.Command{
+	Use:   "convert --from <platform> --input <path> | --to <platform> --input <path>",
+	Short: "Convert a semantic model between Ossie and a platform format",
+	RunE:  runConvert,
+}
+
+func init() {
+	convertCmd.Flags().String("from", "", "Source platform — converts platform → Ossie")
+	convertCmd.Flags().String("to", "", "Target platform — converts Ossie → platform")
+	convertCmd.Flags().StringP("input", "i", "", "Input file or directory path (required)")
+	convertCmd.Flags().StringP("output", "o", "", "Output directory path (default: ./ossie-output/<plugin>/<direction>)")
+	convertCmd.Flags().String("plugin", "", "Path to plugin directory (bypasses name-based discovery)")
+	convertCmd.Flags().Int("timeout", 60, "Plugin invocation timeout in seconds")
+	convertCmd.Flags().String("max-input-size", "100MB", "Maximum total input size (e.g. 500MB)")
+
+	_ = convertCmd.MarkFlagRequired("input")
+	convertCmd.MarkFlagsMutuallyExclusive("from", "to")
+	convertCmd.MarkFlagsOneRequired("from", "to")
+}
+
+func runConvert(cmd *cobra.Command, args []string) error {
+	fmt.Fprintln(cmd.OutOrStdout(), "not yet implemented")
+	return nil
+}
+// file: cli_cli_cmd_validate.go.txt
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package cmd
+
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
+
+var validateCmd = &cobra.Command{
+	Use:   "validate [flags] <path> [<path>...]",
+	Short: "Validate one or more OSSIE YAML or JSON files",
+	Args:  cobra.MinimumNArgs(1),
+	RunE:  runValidate,
+}
+
+func init() {
+	validateCmd.Flags().Bool("strict", false, "Promote warnings to errors")
+	validateCmd.Flags().String("output", "text", "Output format: text or json")
+}
+
+func runValidate(cmd *cobra.Command, args []string) error {
+	fmt.Fprintln(cmd.OutOrStdout(), "not yet implemented")
+	return nil
+}
+// file: cli_cli_cmd_plugin_install.go.txt
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package plugin
+
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
+
+var installCmd = &cobra.Command{
+	Use:   "install [name[@version] | url]",
+	Short: "Install a plugin from the registry or a URL",
+	RunE:  runPluginInstall,
+}
+
+func init() {
+	installCmd.Flags().Bool("all", false, "Install the latest version of all registry plugins")
+}
+
+func runPluginInstall(cmd *cobra.Command, args []string) error {
+	fmt.Fprintln(cmd.OutOrStdout(), "not yet implemented")
+	return nil
+}
+// file: cli_cli_cmd_plugin_list.go.txt
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package plugin
+
+import (
+	"fmt"
+	"os"
+	"text/tabwriter"
+
+	"github.com/spf13/cobra"
+
+	"github.com/apache/ossie/cli/internal/ossiedir"
+	"github.com/apache/ossie/cli/internal/plugin"
+)
+
+var listCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List installed plugins",
+	// TODO(P1): cross-reference against the embedded plugin registry to show
+	// latest available versions and update indicators once registry embedding
+	// (F4) is implemented.
+	RunE: runPluginList,
+}
+
+func runPluginList(cmd *cobra.Command, args []string) error {
+	pluginsDir, err := ossiedir.PluginDir()
+	if err != nil {
+		return err
+	}
+
+	plugins, err := plugin.Discover(pluginsDir, os.Stderr)
+	if err != nil {
+		return err
+	}
+
+	if len(plugins) == 0 {
+		fmt.Fprintln(cmd.OutOrStdout(), "no plugins installed")
+		return nil
+	}
+
+	w := tabwriter.NewWriter(cmd.OutOrStdout(), 0, 0, 2, ' ', 0)
+	fmt.Fprintln(w, "NAME\tPLATFORM\tSPEC")
+	for _, p := range plugins {
+		fmt.Fprintf(w, "%s\t%s\t%s\n", p.Name, p.Platform, p.OSSIEPluginSpec)
+	}
+	return w.Flush()
+}
+// file: cli_cli_cmd_plugin_remove.go.txt
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package plugin
+
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
+
+var removeCmd = &cobra.Command{
+	Use:   "remove <name>",
+	Short: "Remove an installed plugin",
+	Args:  cobra.ExactArgs(1),
+	RunE:  runPluginRemove,
+}
+
+func runPluginRemove(cmd *cobra.Command, args []string) error {
+	fmt.Fprintln(cmd.OutOrStdout(), "not yet implemented")
+	return nil
+}
+// file: cli_cli_cmd_plugin_plugin.go.txt
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package plugin
+
+import "github.com/spf13/cobra"
+
+// Cmd is the parent "ossie plugin" command. It is exported so cmd/root.go can
+// register it. Invoking it bare prints help.
+var Cmd = &cobra.Command{
+	Use:   "plugin",
+	Short: "Manage Ossie plugins",
+}
+
+func init() {
+	Cmd.AddCommand(listCmd)
+	Cmd.AddCommand(installCmd)
+	Cmd.AddCommand(removeCmd)
+}
+// file: cli_cli_internal_ossiedir_ossiedir.go.txt
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package ossiedir
+
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+)
+
+const (
+	defaultOssieDir = ".ossie"
+	pluginsSubdir   = "plugins"
+	envVar          = "OSSIE_PLUGIN_DIR"
+)
+
+// PluginDir returns the resolved plugin directory path.
+// It respects $OSSIE_PLUGIN_DIR if set, otherwise defaults to ~/.ossie/plugins/.
+func PluginDir() (string, error) {
+	if override := os.Getenv(envVar); override != "" {
+		return override, nil
+	}
+	// Use os.UserHomeDir rather than $HOME for Windows portability.
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return "", fmt.Errorf("could not determine home directory: %w", err)
+	}
+	return filepath.Join(home, defaultOssieDir, pluginsSubdir), nil
+}
+
+// EnsurePluginDir ensures the plugin directory exists, creating it if needed.
+// It is safe to call multiple times — os.MkdirAll is idempotent.
+func EnsurePluginDir() error {
+	dir, err := PluginDir()
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return fmt.Errorf("could not create plugin directory %s: %w", dir, err)
+	}
+	return nil
+}
+// file: cli_cli_internal_plugin_discover.go.txt
+package plugin
+
+import (
+	"errors"
+	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+
+	"gopkg.in/yaml.v3"
+)
+
+const pluginYAML = "plugin.yaml"
+
+// Discover scans pluginsDir for subdirectories that contain a plugin.yaml,
+// parses and validates each one, and returns all valid plugins.
+//
+// Malformed or invalid plugin directories are skipped with a warning written
+// to stderr in the format:
+//
+//	warning: skipping plugin at <path>: <reason>
+//
+// A non-existent pluginsDir is treated as empty and returns (nil, nil).
+// A hard error is only returned if pluginsDir itself cannot be read.
+func Discover(pluginsDir string, stderr io.Writer) ([]*Plugin, error) {
+	entries, err := os.ReadDir(pluginsDir)
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("could not read plugin directory %s: %w", pluginsDir, err)
+	}
+
+	var plugins []*Plugin
+	for _, entry := range entries {
+		// TODO: handle symlinked plugin directories
+		// (entry.Type()&os.ModeSymlink != 0 requires os.Stat to resolve)
+		if !entry.IsDir() {
+			continue
+		}
+		pluginPath := filepath.Join(pluginsDir, entry.Name())
+		p, err := loadPlugin(pluginPath)
+		if err != nil {
+			fmt.Fprintf(stderr, "warning: skipping plugin at %s: %s\n", pluginPath, err)
+			continue
+		}
+		plugins = append(plugins, p)
+	}
+	return plugins, nil
+}
+
+// loadPlugin reads, parses, and validates the plugin.yaml inside dir.
+func loadPlugin(dir string) (*Plugin, error) {
+	yamlPath := filepath.Join(dir, pluginYAML)
+	data, err := os.ReadFile(yamlPath)
+	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil, fmt.Errorf("no plugin.yaml found")
+		}
+		return nil, fmt.Errorf("could not read plugin.yaml: %w", err)
+	}
+
+	// yaml.Unmarshal is lenient by default: unknown fields are silently ignored.
+	// This is intentional — future spec versions may add fields that older CLI
+	// versions should tolerate rather than reject.
+	var raw rawPlugin
+	if err := yaml.Unmarshal(data, &raw); err != nil {
+		return nil, fmt.Errorf("invalid YAML: %w", err)
+	}
+
+	if err := raw.validate(); err != nil {
+		return nil, err
+	}
+
+	return raw.toPlugin(dir), nil
+}
+// file: cli_cli_internal_plugin_invoke.go.txt
+package plugin
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
+	"os/exec"
+)
+
+// Request is the JSON envelope sent to a plugin on stdin.
+type Request struct {
+	Files map[string]string `json:"files"`
+}
+
+// Response is the JSON envelope received from a plugin on stdout.
+type Response struct {
+	Files  map[string]string `json:"files"`
+	Issues []Issue           `json:"issues,omitempty"`
+}
+
+// Issue is a single diagnostic emitted by a plugin during conversion.
+// Severity is one of "error", "warning", or "info".
+// Path is optional; it is omitted for issues not tied to a specific location.
+type Issue struct {
+	Severity string `json:"severity"`
+	Message  string `json:"message"`
+	Path     string `json:"path,omitempty"`
+}
+
+// Invoke runs a plugin subprocess, pipes req as JSON to its stdin,
+// and decodes its stdout as a JSON Response.
+//
+// pluginDir is used as the working directory for the subprocess so that
+// relative paths in the invoke array resolve correctly.
+// invoke is the command and its arguments (invoke[0] is the executable).
+// pluginStderr receives the plugin's stderr verbatim; pass io.Discard to suppress.
+//
+// Hard errors: failed to marshal request, process start failure, context
+// deadline exceeded, non-zero exit code, or invalid JSON in the response.
+// A non-empty Issues slice in the response is NOT itself a Go error — the
+// caller is responsible for inspecting severities and setting the exit code.
+func Invoke(ctx context.Context, pluginDir string, invoke []string, req Request, pluginStderr io.Writer) (*Response, error) {
+	if len(invoke) == 0 {
+		return nil, fmt.Errorf("plugin invoke command is empty")
+	}
+
+	// Normalise nil to empty map so plugins always receive {"files":{}} not {"files":null}.
+	if req.Files == nil {
+		req.Files = map[string]string{}
+	}
+
+	reqJSON, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal plugin request: %w", err)
+	}
+
+	var stdout bytes.Buffer
+	cmd := exec.CommandContext(ctx, invoke[0], invoke[1:]...)
+	cmd.Dir = pluginDir
+	cmd.Stdin = bytes.NewReader(reqJSON)
+	// Use an explicit buffer rather than cmd.Output() — cmd.Output() is
+	// incompatible with a pre-assigned cmd.Stderr writer.
+	cmd.Stdout = &stdout
+	cmd.Stderr = pluginStderr
+
+	if err := cmd.Run(); err != nil {
+		// ctx.Err() is the authoritative signal for timeout/cancellation.
+		// exec.CommandContext kills the process and returns "signal: killed",
+		// not context.DeadlineExceeded, so we must check ctx.Err() explicitly.
+		if ctx.Err() != nil {
+			return nil, fmt.Errorf("plugin timed out: %w", ctx.Err())
+		}
+		return nil, fmt.Errorf("plugin process failed: %w", err)
+	}
+
+	var resp Response
+	if err := json.Unmarshal(stdout.Bytes(), &resp); err != nil {
+		return nil, fmt.Errorf("invalid JSON response from plugin: %w", err)
+	}
+	return &resp, nil
+}
+// file: cli_cli_internal_plugin_plugin.go.txt
+package plugin
+
+import "errors"
+
+// Plugin is the parsed and validated representation of a single installed plugin.
+// Path is the absolute path to the plugin's installation directory on disk.
+type Plugin struct {
+	Path             string // absolute path to plugin dir on disk
+	OSSIEPluginSpec  string
+	OSSIESpecVersion string
+	Name             string // required; the plugin's own identity, matched against --from/--to values
+	Platform         string // optional; freeform display label for what the plugin converts to/from (e.g. "dbt Labs", "PowerBI")
+	Setup            string // relative path to setup script; empty = no setup
+	Convert          ConvertConfig
+}
+
+// ConvertConfig holds both conversion directions.
+type ConvertConfig struct {
+	ToOssie   Direction
+	FromOssie Direction
+}
+
+// Direction describes one conversion direction.
+type Direction struct {
+	Invoke  []string // command + args; first element is the executable
+	Accepts []string // file extensions e.g. [".yaml"]; populated on ToOssie only
+}
+
+// rawPlugin mirrors the on-disk plugin.yaml layout for YAML unmarshaling.
+type rawPlugin struct {
+	OSSIEPluginSpec  string `yaml:"ossie_plugin_spec"`
+	OSSIESpecVersion string `yaml:"ossie_spec_version"`
+
+	Name     string `yaml:"name"`
+	Platform string `yaml:"platform"`
+
+	Setup string `yaml:"setup"`
+
+	Convert struct {
+		ToOssie struct {
+			Invoke  []string `yaml:"invoke"`
+			Accepts []string `yaml:"accepts"`
+		} `yaml:"to_ossie"`
+		FromOssie struct {
+			Invoke []string `yaml:"invoke"`
+		} `yaml:"from_ossie"`
+	} `yaml:"convert"`
+}
+
+// validate checks that all required fields are present.
+// It performs presence checks only — not format validation.
+func (r *rawPlugin) validate() error {
+	switch {
+	case r.OSSIEPluginSpec == "":
+		return errors.New("missing required field: ossie_plugin_spec")
+	case r.OSSIESpecVersion == "":
+		return errors.New("missing required field: ossie_spec_version")
+	case r.Name == "":
+		return errors.New("missing required field: name")
+	case len(r.Convert.ToOssie.Invoke) == 0:
+		return errors.New("missing required field: convert.to_ossie.invoke")
+	case len(r.Convert.ToOssie.Accepts) == 0:
+		return errors.New("missing required field: convert.to_ossie.accepts")
+	case len(r.Convert.FromOssie.Invoke) == 0:
+		return errors.New("missing required field: convert.from_ossie.invoke")
+	}
+	return nil
+}
+
+// toPlugin maps a validated rawPlugin to the exported Plugin type.
+// path is the absolute directory path of the plugin's installation.
+func (r *rawPlugin) toPlugin(path string) *Plugin {
+	return &Plugin{
+		Path:             path,
+		OSSIEPluginSpec:  r.OSSIEPluginSpec,
+		OSSIESpecVersion: r.OSSIESpecVersion,
+		Name:             r.Name,
+		Platform:         r.Platform,
+		Setup:            r.Setup,
+		Convert: ConvertConfig{
+			ToOssie: Direction{
+				Invoke:  r.Convert.ToOssie.Invoke,
+				Accepts: r.Convert.ToOssie.Accepts,
+			},
+			FromOssie: Direction{
+				Invoke: r.Convert.FromOssie.Invoke,
+			},
+		},
+	}
+}
