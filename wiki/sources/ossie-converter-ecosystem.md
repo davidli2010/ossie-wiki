@@ -78,10 +78,10 @@ stale_after: 2027-02-01
 - 已知缝隙：many-to-many 跳过（OSI Multiplicity 枚举仅 ManyToOne/OneToOne）、复合键取首列、measures/metrics 不在 ontology 层、反向 importer（OSI ontology→OBML）推迟到 OSI 去掉 dev 后缀。[^orionbelt-ontomapping]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)（转换器全景见该页）
+- [Apache Ossie](../entities/apache-ossie.md)（转换器全景见该页）
 
 ## 引入/强化的概念
-- [Hub-and-Spoke 转换架构](/concepts/hub-and-spoke.md)——本页是「round-trip fidelity 成立前提」的逐厂商实证
+- [Hub-and-Spoke 转换架构](../concepts/hub-and-spoke.md)——本页是「round-trip fidelity 成立前提」的逐厂商实证
 
 ## 与已有知识的关联
 - 掘金概览（2026-07-17）评 8 个转换器；本批快照（2026-08-15）增至 11 个（新增 Databricks、NVIDIA GSF、WisdomAI），并给出每方向的精确丢/留点。[^conv-databricks][^conv-gsf][^conv-wisdom]

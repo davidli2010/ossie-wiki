@@ -28,15 +28,15 @@ stale_after: 2027-02-01
 ## 关键机制
 - 多 SQL 方言表达式（ANSI_SQL / SNOWFLAKE / DATABRICKS / BIGQUERY / MDX / TABLEAU / MAQL），回退顺序"目标方言 > ANSI_SQL > 警告/失败"。[^juejin-ossie]
 - `custom_extensions` 承载核心规范无法表达的厂商私有信息，管理 round-trip 的信息损失。[^juejin-ossie]
-- 交换与分发经 [Hub-and-Spoke 转换架构](/concepts/hub-and-spoke.md) 完成。[^juejin-ossie]
+- 交换与分发经 [Hub-and-Spoke 转换架构](hub-and-spoke.md) 完成。[^juejin-ossie]
 - **两层互操作**：核心 spec 解决结构性互操作（任何工具都能读写公共格式）；**本体层（ontology）** 解决概念互操作——独立于物理数据布局定义业务概念（Customer/Order/Product 与 ValueType 单元语义），并把物理语义模型经 ontology_mappings 映射回共享定义。ontology 是独立文档类型（0.2.0.dev0），不并入 core-spec。[^ontology-tooling]
 - 官方本体示例（examples/flights.yaml）用 ValueType + `requires` 表达跨模型共享的值语义与业务不变量，正是路线图中"概念互操作"的落点。[^ontology-tooling]
 
 ## 相关概念
-- [语义层](/concepts/semantic-layer.md)
-- [Hub-and-Spoke 转换架构](/concepts/hub-and-spoke.md)
-- [AI Context](/concepts/ai-context.md)
-- [Apache Ossie](/entities/apache-ossie.md)
+- [语义层](semantic-layer.md)
+- [Hub-and-Spoke 转换架构](hub-and-spoke.md)
+- [AI Context](ai-context.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 [^juejin-ossie]: 每天一个开源项目#40 Apache Ossie（掘金，2026-07-17）
-[^ontology-tooling]: [Apache Ossie 本体规范与示例](/sources/ossie-ontology-tooling.md)（2026-08-15 快照）
+[^ontology-tooling]: [Apache Ossie 本体规范与示例](../sources/ossie-ontology-tooling.md)（2026-08-15 快照）

@@ -30,7 +30,7 @@ actor 约定：agent 用 `llm-wiki/deepseek-v4-flash-free`，人用 `human:<id>`
 ## 命名与链接约定
 
 - 文件名全部小写、连字符分隔、去掉类型前缀。
-- 站内互链用 bundle-relative 绝对路径：`[显示名](/entities/apache-ossie.md)`（`/` = `wiki/` 根）。
+- 站内互链用相对于当前页面的 Markdown 路径：来源页/概念页/实体页分别使用 `../sources/...`、`../concepts/...`、`../entities/...`；`wiki/index.md` 使用 `entities/...`。禁止以 `/` 开头，确保普通 Markdown 渲染器可直接打开。
 - 引用 bundle 外文件（raw/output）用相对路径：`../raw/xxx.md`。
 - 正文事实性论断用 footnote，label 必须等于某个 `sources[].id`。
 

@@ -120,14 +120,14 @@ set 语义（非 bag）、链接不含 null。字段：name/description/`multipl
 0.2.0.dev0（2026-05-29）：Basic support for ontologies and logical schema mappings。[^ontology-spec]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 ## 引入/强化的概念
-- [语义元数据交换](/concepts/semantic-metadata-interchange.md)、[语义层](/concepts/semantic-layer.md)
+- [语义元数据交换](../concepts/semantic-metadata-interchange.md)、[语义层](../concepts/semantic-layer.md)
 
 ## 与已有知识的关联
 - 掘金概览将其描述为"验证链"的输入（data 由 spec 定义）；本页是 spec 的规范级完整编目，含 `is_time` 默认、表达式语言合规级别等细节。[^core-spec][^expr-lang]
-- ontology.md 正文与本批次另建的 [ossie-ontology-tooling](/sources/ossie-ontology-tooling.md)（ontology.json schema + flights 示例）互补。[^ontology-spec]
+- ontology.md 正文与本批次另建的 [ossie-ontology-tooling](ossie-ontology-tooling.md)（ontology.json schema + flights 示例）互补。[^ontology-spec]
 
 [^core-spec]: Apache Ossie 核心元数据规范 spec.md
 [^expr-lang]: 表达式语言提案 OSSIE_SQL_2026

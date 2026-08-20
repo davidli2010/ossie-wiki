@@ -30,13 +30,13 @@ stale_after: 2027-01-01
 - `ai_context` 是语义治理接口（消歧/约束/示范），但只是可传递的上下文元数据，不构成权限控制或防幻觉机制。[^self]
 
 ## 提及的实体
-项目实体见 [Apache Ossie](/entities/apache-ossie.md)。
+项目实体见 [Apache Ossie](../entities/apache-ossie.md)。
 
 ## 引入的概念
-- [语义层](/concepts/semantic-layer.md)
-- [Hub-and-Spoke 转换架构](/concepts/hub-and-spoke.md)
-- [AI Context](/concepts/ai-context.md)
-- [语义元数据交换](/concepts/semantic-metadata-interchange.md)
+- [语义层](../concepts/semantic-layer.md)
+- [Hub-and-Spoke 转换架构](../concepts/hub-and-spoke.md)
+- [AI Context](../concepts/ai-context.md)
+- [语义元数据交换](../concepts/semantic-metadata-interchange.md)
 
 ## 与已有知识的关联
 - 与 Parquet/Arrow（统一数据格式）、ODBC/JDBC（统一访问接口）类比，Ossie 瞄准更上层的业务含义与指标逻辑交换。[^self]

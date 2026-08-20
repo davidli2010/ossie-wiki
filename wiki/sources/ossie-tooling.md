@@ -57,10 +57,10 @@ stale_after: 2027-02-01
 - PyPI 包 `apache-ossie`（Python 3.11+，uv 构建）：Pydantic v2 模型，是**所有 Python 转换器的解析/构造/校验/序列化共享基础**。[^python-pkg]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 ## 引入/强化的概念
-- [Hub-and-Spoke 转换架构](/concepts/hub-and-spoke.md)——插件化 CLI 是 hub 的工程化载体
+- [Hub-and-Spoke 转换架构](../concepts/hub-and-spoke.md)——插件化 CLI 是 hub 的工程化载体
 
 ## 与已有知识的关联
 - 与掘金概览（2026-07-17）描述的「JSON Schema + 语义引用 + sqlglot」验证链一致，validate.py 是本验证链的直接源码。[^validate-py]

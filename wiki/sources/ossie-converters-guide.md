@@ -14,7 +14,7 @@ stale_after: 2027-02-01
 
 # Apache Ossie 转换器指南
 
-> 快照 2026-08-14。converters/ 总指南（权威文档之总纲），厂商级展开见 [转换器生态页](/sources/ossie-converter-ecosystem.md)。
+> 快照 2026-08-14。converters/ 总指南（权威文档之总纲），厂商级展开见 [转换器生态页](ossie-converter-ecosystem.md)。
 
 ## Hub-and-Spoke 模型
 - **Hub**：Ossie 核心规范为中心厂商中立格式；**Spokes**：各厂商 converter 处理与 Ossie 的双向转换。
@@ -57,12 +57,12 @@ stale_after: 2027-02-01
 稳定 `vendor_name` → 定义厂商 custom extension schema → 实现 export → 实现 import → 用 TPC-DS 示例模型作基线测试 → 文档化限制。[^conv-guide]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 ## 引入/强化的概念
-- [Hub-and-Spoke 转换架构](/concepts/hub-and-spoke.md)——本页是该概念在规范层的权威定义与实现规范
+- [Hub-and-Spoke 转换架构](../concepts/hub-and-spoke.md)——本页是该概念在规范层的权威定义与实现规范
 
 ## 与已有知识的关联
-- 与 [转换器生态页](/sources/ossie-converter-ecosystem.md)（11 厂商实证）互为总纲与细节；`is_time` 默认规则与 [核心规范页](/sources/ossie-core-spec.md) 一致。[^conv-guide]
+- 与 [转换器生态页](ossie-converter-ecosystem.md)（11 厂商实证）互为总纲与细节；`is_time` 默认规则与 [核心规范页](ossie-core-spec.md) 一致。[^conv-guide]
 
 [^conv-guide]: converters/README.md

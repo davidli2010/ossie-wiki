@@ -1,5 +1,9 @@
 # 操作日志
 
+## 2026-08-20
+* **lint**: 按升级后的链接规范修复全库站内链接：将 64 处以 `/` 开头的 bundle-root 链接改为相对于当前页面的 Markdown 路径；同步更新 `AGENTS.md` schema。概念页使用同目录链接，实体页/来源页使用 `../concepts/`、`../entities/`、`../sources/`；待建的 Apache Software Foundation 页面保留为明确的待建知识链接。
+* **lint**: 全库健康检查（16 个知识页面）。索引与实际页面一致（16=16）；所有非保留页面具备可解析 frontmatter、非空 `type`、`generated` 与有效 `sources[].resource`；`stale_after` 均未过期；raw/41 个文件全部被来源摘要页引用；footnote label 与来源 id 一致。补齐 schema 要求的空目录 `raw/assets/`、`wiki/comparisons/`、`wiki/playbooks/`。遗留：页面均未人工验证（unverified）；`entities/apache-software-foundation.md` 是已明确标注的待建知识链接，不作为坏链修复。
+
 ## 2026-08-15
 * **produce**: 基于 wiki 全库撰写《Apache Ossie 核心规范完全指南》（output/ossie-core-spec-intro.md）——宏观（语义层空白/规范文档全景）+ 微观（spec.md 全字段枚举/is_time 与 datatype 分离/OSSIE_SQL_2026 函数合规/ontology 四机制/验证链与 round-trip 三法则）+ TPC-DS 旗舰示例串讲。聚焦核心规范本体，区别于已有的项目级入门指南。纯综合编译，未引入新知识，无需新增 wiki 页；结构守护者检查通过（索引未变，output 一次交付物不影响 wiki 结构）
 * **produce**: 基于全部 16 页 wiki 内容撰写《Apache Ossie 完全入门指南》（output/apache-ossie-intro.md）——宏观（背景/四类碎片化/语义层）+ 微观（六类构建块/YAML 示例/is_time/custom_extensions/AI Context/OSSIE_SQL_2026/ontology）+ 工具链/转换器生态/治理/成熟度评估/上手路径。纯综合编译，未引入新知识，无需新增 wiki 页；结构守护者检查通过（索引新鲜度 16=16，无新增孤立页）

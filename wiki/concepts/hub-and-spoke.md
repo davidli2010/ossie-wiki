@@ -44,9 +44,9 @@ Converer 生态的 round-trip fidelity 是分层实现的：
 结论再次印证成立前提：**round-trip fidelity 不是免费的**——每个厂商方向都精确声明了丢/留点，"无损"与"有损"是转换器级的显式决策而非常态。[^conv-ecosystem]
 
 ## 相关概念
-- [语义元数据交换](/concepts/semantic-metadata-interchange.md)
-- [语义层](/concepts/semantic-layer.md)
-- [Apache Ossie](/entities/apache-ossie.md)
+- [语义元数据交换](semantic-metadata-interchange.md)
+- [语义层](semantic-layer.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 [^juejin-ossie]: 每天一个开源项目#40 Apache Ossie（掘金，2026-07-17）
-[^conv-ecosystem]: [Apache Ossie 转换器生态](/sources/ossie-converter-ecosystem.md)（2026-08-15 快照）
+[^conv-ecosystem]: [Apache Ossie 转换器生态](../sources/ossie-converter-ecosystem.md)（2026-08-15 快照）

@@ -65,7 +65,7 @@ stale_after: 2027-02-01
 - **Tooling & Ecosystem**（Issue #121 converter/common Java binding、#111 Snowflake 映射）。[^roadmap]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 ## 与已有知识的关联
 - 掘金概览所列路线图未完成项（指标粒度、语义查询语言、参考编译器、Registry、verified queries）在本页有完整编号与动机展开，并揭示实际的当前工作组建置。[^roadmap]

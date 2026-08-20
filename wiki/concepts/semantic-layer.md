@@ -22,14 +22,14 @@ stale_after: 2027-01-01
 Ossie 把数据集、字段、关系、指标、SQL 方言与 AI 上下文组织进一个可版本化、可验证的中间表示，作为语义交换枢纽。语义层规范对象：`datasets` / `fields` / `relationships` / `metrics` / `ai_context` / `custom_extensions`。[^juejin-ossie]
 
 ## 与相邻抽象的关系
-- Parquet/Arrow 统一数据存储格式，ODBC/JDBC 统一访问接口，[语义元数据交换](/concepts/semantic-metadata-interchange.md)（语义层的交换协议）瞄准更上层的业务含义与指标逻辑。[^juejin-ossie]
+- Parquet/Arrow 统一数据存储格式，ODBC/JDBC 统一访问接口，[语义元数据交换](semantic-metadata-interchange.md)（语义层的交换协议）瞄准更上层的业务含义与指标逻辑。[^juejin-ossie]
 - 语义层不是查询引擎：Ossie 负责定义、交换与验证，不连接数据库执行查询。[^juejin-ossie]
 
 ## 相关概念
-- [语义元数据交换](/concepts/semantic-metadata-interchange.md)
-- [Hub-and-Spoke 转换架构](/concepts/hub-and-spoke.md)
-- [AI Context](/concepts/ai-context.md)
-- [Apache Ossie](/entities/apache-ossie.md)
+- [语义元数据交换](semantic-metadata-interchange.md)
+- [Hub-and-Spoke 转换架构](hub-and-spoke.md)
+- [AI Context](ai-context.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 ## 未解问题
 - 指标粒度、关系基数、复合键业务语义、跨数据集安全聚合仍缺规范定义与 conformance suite。[^juejin-ossie]

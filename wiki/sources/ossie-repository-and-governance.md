@@ -69,7 +69,7 @@ Contributors → Committers（写权限、binding 投票权，须 ICLA）→ PPM
 - 遵循 ASF Code of Conduct；AI 辅助贡献由提交者负个人责任（ASF Generative Tooling Guidance）。[^contributing]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)（Apache Way 采用的背景：[名称与治理迁移](/sources/ossie-community-updates.md)）
+- [Apache Ossie](../entities/apache-ossie.md)（Apache Way 采用的背景：[名称与治理迁移](ossie-community-updates.md)）
 
 ## 与已有知识的关联
 - 对应掘金概览已覆盖的基本信息，补充**仓库迁移后的官方指标快照**与**治理规则细节**。[^gh-readme][^contributing]

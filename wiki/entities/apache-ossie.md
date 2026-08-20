@@ -31,15 +31,15 @@ stale_after: 2027-02-01
 - 一句话定位：语义层的"Parquet"——让数据平台、BI 与 AI Agent 交换同一套业务意义，而非替代任一执行引擎。[^juejin-ossie]
 - GitHub: [apache/ossie](https://github.com/apache/ossie)，官网: ossie.apache.org
 - License: Apache License 2.0；主语言 Python 75.1% / Java 24.9%（主要为参考转换器，规范本体是 YAML/JSON/Markdown）。[^juejin-ossie]
-- 快照数据（2026-07-17，[详情](/sources/apache-ossie-juejin-overview.md)）：Stars ~1,055、Forks 142、Open Issues 57、创建于 2025-11-18、GitHub Trending #1/17。[^juejin-ossie]
-- 快照数据（2026-08-14，[仓库页](/sources/ossie-repository-and-governance.md)）：Stars **1.9k**、Forks 235、Open Issues 44、Commits 241、Watchers 46；被 ASF 接纳后已迁移至 `apache/ossie`。[^repo-governance]
-- 生态：官网生态页（2026-08-14）列出 **60+ 组织**；[详情](/sources/ossie-website.md)。[^website]
+- 快照数据（2026-07-17，[详情](../sources/apache-ossie-juejin-overview.md)）：Stars ~1,055、Forks 142、Open Issues 57、创建于 2025-11-18、GitHub Trending #1/17。[^juejin-ossie]
+- 快照数据（2026-08-14，[仓库页](../sources/ossie-repository-and-governance.md)）：Stars **1.9k**、Forks 235、Open Issues 44、Commits 241、Watchers 46；被 ASF 接纳后已迁移至 `apache/ossie`。[^repo-governance]
+- 生态：官网生态页（2026-08-14）列出 **60+ 组织**；[详情](../sources/ossie-website.md)。[^website]
 
 ## 治理（Apache Way / ASF 孵化）
 - 参与以 mailing lists 为主渠道（dev@/commits@/issues@/private@）；GitHub 与 Slack 为次要。[^repo-governance]
 - 决策目标 lazy consensus；代码变更至少 1 个 binding +1 无否决；**规范变更至少 3 个 binding +1 无否决**（discussion ≥7 天）。[^repo-governance]
 - Release 两阶段审批：dev@ PPMC ≥3 binding +1 → general@incubator IPMC ≥3 binding +1。[^repo-governance]
-- Milestone：2026-07-10 进入 Apache 孵化器并更名 Apache Ossie（更名动机、治理迁移与 Snowflake 后续方向详见 [community-updates](/sources/ossie-community-updates.md)）。[^community-updates]
+- Milestone：2026-07-10 进入 Apache 孵化器并更名 Apache Ossie（更名动机、治理迁移与 Snowflake 后续方向详见 [community-updates](../sources/ossie-community-updates.md)）。[^community-updates]
 
 ## 要解决的问题（四类碎片化）
 1. **Metric Drift**：不同工具同名 KPI 算法不同；
@@ -49,7 +49,7 @@ stale_after: 2027-02-01
 
 ## 核心架构
 - 语义模型五类对象：datasets / fields / relationships / metrics / ai_context / custom_extensions。[^juejin-ossie]
-- Hub-and-Spoke 转换器：以 Ossie 为中心，每平台只需 import/export 两条路径（复杂度 `N×(N-1)` → `2×N`）。见 [Hub-and-Spoke 转换架构](/concepts/hub-and-spoke.md)。[^juejin-ossie]
+- Hub-and-Spoke 转换器：以 Ossie 为中心，每平台只需 import/export 两条路径（复杂度 `N×(N-1)` → `2×N`）。见 [Hub-and-Spoke 转换架构](../concepts/hub-and-spoke.md)。[^juejin-ossie]
 - 验证链：JSON Schema + 语义引用检查 + sqlglot 方言语法检查；不是完整语义编译器。[^juejin-ossie]
 
 ## 版本与成熟度
@@ -89,22 +89,22 @@ README 宣称 50+ 参与组织（Databricks、dbt Labs、GoodData、Mistral AI�
 - 官方示例 `examples/flights.yaml` 是 ontology 文档：ValueType 通过 `extends` 叠加单元语义（NrFeet extends Decimal），`requires` 承载业务不变量断言（如 `DegreesLatitude <= 90`）。[^ontology-tooling]
 
 ## 工作组成置与路线图（2026-08-14 快照）
-- 当前 **4 个工作组**（[详情](/sources/ossie-roadmap-and-working-groups.md)）：Metric Language（Will Pugh）、Catalog（Shubham Bhargav/Atlan）、Ontology（Kurt/Relational AI）、Financial Services Common Semantics（John Heisler/Snowflake）。
+- 当前 **4 个工作组**（[详情](../sources/ossie-roadmap-and-working-groups.md)）：Metric Language（Will Pugh）、Catalog（Shubham Bhargav/Atlan）、Ontology（Kurt/Relational AI）、Financial Services Common Semantics（John Heisler/Snowflake）。
 - 演进：2026-04 的 5 组（Advanced Metrics、Composability、Catalog、Ontology、Converters）→ 当前 4 组。[^roadmap-wg][^community-updates]
 - **FSI 工作组**（2026-06-03 首次会议）：参与者含 Northern Trust、DTCC、LSEG、Verisk、BlackRock、S&P Global、AIG、TIAA 等；三项倡议 Architecture / Commercial Impact 度量 / Structure。[^community-updates]
-- 路线图三类：当前努力（Metric Semantics、Catalog 集成、Ontology）、未来努力（逻辑建模、语义查询语言、SQL 方言、时间语义、AI-Native、治理、行业模型）、增量增强（命名、unit/currency、Extended Metadata #100 等）。详见 [roadmap](/sources/ossie-roadmap-and-working-groups.md)。[^roadmap-wg]
+- 路线图三类：当前努力（Metric Semantics、Catalog 集成、Ontology）、未来努力（逻辑建模、语义查询语言、SQL 方言、时间语义、AI-Native、治理、行业模型）、增量增强（命名、unit/currency、Extended Metadata #100 等）。详见 [roadmap](../sources/ossie-roadmap-and-working-groups.md)。[^roadmap-wg]
 
 ## 相关实体
-- 上游组织：[Apache Software Foundation](/entities/apache-software-foundation.md)（待建）
+- 上游组织：[Apache Software Foundation](apache-software-foundation.md)（待建）
 
 ## 相关概念
-- [语义层](/concepts/semantic-layer.md)、[语义元数据交换](/concepts/semantic-metadata-interchange.md)、[Hub-and-Spoke 转换架构](/concepts/hub-and-spoke.md)、[AI Context](/concepts/ai-context.md)
+- [语义层](../concepts/semantic-layer.md)、[语义元数据交换](../concepts/semantic-metadata-interchange.md)、[Hub-and-Spoke 转换架构](../concepts/hub-and-spoke.md)、[AI Context](../concepts/ai-context.md)
 
 [^juejin-ossie]: 每天一个开源项目#40 Apache Ossie（掘金，2026-07-17）
-[^conv-ecosystem]: [Apache Ossie 转换器生态](/sources/ossie-converter-ecosystem.md)（2026-08-15 快照）
-[^ossie-tooling]: [Apache Ossie 工具链与机器可读工件](/sources/ossie-tooling.md)（2026-08-15 快照）
-[^ontology-tooling]: [Apache Ossie 本体规范与示例](/sources/ossie-ontology-tooling.md)（2026-08-15 快照）
-[^repo-governance]: [Apache Ossie 仓库主页与贡献指南](/sources/ossie-repository-and-governance.md)（2026-08-14）
-[^roadmap-wg]: [Apache Ossie 路线图与工作组](/sources/ossie-roadmap-and-working-groups.md)（2026-08-14）
-[^community-updates]: [Apache Ossie 官网社区更新](/sources/ossie-community-updates.md)（2026-07-10）
-[^website]: [Apache Ossie 官网](/sources/ossie-website.md)（2026-08-14）
+[^conv-ecosystem]: [Apache Ossie 转换器生态](../sources/ossie-converter-ecosystem.md)（2026-08-15 快照）
+[^ossie-tooling]: [Apache Ossie 工具链与机器可读工件](../sources/ossie-tooling.md)（2026-08-15 快照）
+[^ontology-tooling]: [Apache Ossie 本体规范与示例](../sources/ossie-ontology-tooling.md)（2026-08-15 快照）
+[^repo-governance]: [Apache Ossie 仓库主页与贡献指南](../sources/ossie-repository-and-governance.md)（2026-08-14）
+[^roadmap-wg]: [Apache Ossie 路线图与工作组](../sources/ossie-roadmap-and-working-groups.md)（2026-08-14）
+[^community-updates]: [Apache Ossie 官网社区更新](../sources/ossie-community-updates.md)（2026-07-10）
+[^website]: [Apache Ossie 官网](../sources/ossie-website.md)（2026-08-14）

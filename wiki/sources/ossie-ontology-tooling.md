@@ -38,10 +38,10 @@ stale_after: 2027-02-01
 - 已知缺口：ValueType 建模（flights 用 ValueType 定义单元类型）在 OBML 导出中被 deferred；measures/metrics 不进入 ontology 层。[^orionbelt-ontomapping]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 ## 引入/强化的概念
-- [语义元数据交换](/concepts/semantic-metadata-interchange.md)（本体层是结构性互操作之上的概念互操作）
+- [语义元数据交换](../concepts/semantic-metadata-interchange.md)（本体层是结构性互操作之上的概念互操作）
 
 ## 与已有知识的关联
 - 本体规范正文（raw/ossie-ontology-spec.md）已汇总概念类型/内置概念/多重性；本页补充 schema 与示例细节。[^ontology-json]

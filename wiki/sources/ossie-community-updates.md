@@ -58,11 +58,11 @@ stale_after: 2027-02-01
   3. **Structure**：建议如何跨金融子行业与功能领域组织语义。[^fsi-wg]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 ## 与已有知识的关联
-- 更名公告为「项目为何/如何进入 Apache 孵化」的权威叙事，与掘金概览（2026-07-17 快照）中 Apache 名称一致；治理规则细节见 [仓库与治理页](/sources/ossie-repository-and-governance.md)。[^name-change]
-- 2026-04 的 5 工作组与当前 [工作组快照](/sources/ossie-roadmap-and-working-groups.md) 的 4 组形成演进对照；FSI WG 即当前 Financial Services Common Semantics 组的前身。[^april-2026][^fsi-wg]
+- 更名公告为「项目为何/如何进入 Apache 孵化」的权威叙事，与掘金概览（2026-07-17 快照）中 Apache 名称一致；治理规则细节见 [仓库与治理页](ossie-repository-and-governance.md)。[^name-change]
+- 2026-04 的 5 工作组与当前 [工作组快照](ossie-roadmap-and-working-groups.md) 的 4 组形成演进对照；FSI WG 即当前 Financial Services Common Semantics 组的前身。[^april-2026][^fsi-wg]
 
 [^april-2026]: OSI Community Update（2026-04-28）
 [^fsi-wg]: The FSI Semantic Working Group Is Live（2026-06-04）

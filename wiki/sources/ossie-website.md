@@ -45,11 +45,11 @@ stale_after: 2027-02-01
 - 2026-06-04 FSI 工作组上线；2026-04-28 社区更新；2026-03-24 Denodo；2026-02-10 Databao（JetBrains）；2026-02-03 Collate；2026-01-27 AtScale / dbt Labs / Qlik / Salesforce / Snowflake 五篇；2025-12-08 DataHub；2025-11-25 Domo；2025-11-13 Collibra / Snowflake（expand）/ Starburst / Strategy；2025-10-28 dbt MetricFlow 开源；2025-10-15 Preset；2025-09-23 发布日 17 家 launch partners（Snowflake/Omni/Salesforce/ThoughtSpot/Honeydew/RelationalAI/Alation/Atlan/Cube/Elementum/Select Star/Sigma 等公告）。[^updates-index]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 ## 与已有知识的关联
-- 官网生态名单（60+，2026-08-14）对 README 宣称的 50+ 参与组织（2026-07-17）做了增量；Snowflake 的系统函数与 [转换器生态](/sources/ossie-converter-ecosystem.md) 的 snowflake converter 对应。[^ecosystem]
-- 首页 Core Classes 与 [核心规范页](/sources/ossie-core-spec.md) 的 semantic_model 结构一致。[^homepage]
+- 官网生态名单（60+，2026-08-14）对 README 宣称的 50+ 参与组织（2026-07-17）做了增量；Snowflake 的系统函数与 [转换器生态](ossie-converter-ecosystem.md) 的 snowflake converter 对应。[^ecosystem]
+- 首页 Core Classes 与 [核心规范页](ossie-core-spec.md) 的 semantic_model 结构一致。[^homepage]
 
 [^community]: 官网社区页
 [^ecosystem]: 官网生态页

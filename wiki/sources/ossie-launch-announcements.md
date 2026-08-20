@@ -50,12 +50,12 @@ stale_after: 2027-02-01
 - 承诺把项目产出**捐赠给 Apache Software Foundation**（2026-07-10 已落地）。[^sf-drift]
 
 ## 相关实体
-- [Apache Ossie](/entities/apache-ossie.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 ## 与已有知识的关联
-- 四篇公告构成 OSI→Apache Ossie 的外部叙事与演化时间线（发布 → 工作组规模扩大 → 规范上线 → 更名入孵），是 [官网 Updates 索引](/sources/ossie-website.md) 所列外链的原文。[^launch]
-- MetricFlow 作为参考实现，与 [转换器生态](/sources/ossie-converter-ecosystem.md) 中 dbt converter（MetricFlow Semantic Interface）直接相关。[^expands]
-- "SQL Dialect / 表达式语言" 的规范化努力（[核心规范页](/sources/ossie-core-spec.md)）呼应 Salesforce 的"Native query logic"。 [^sf-drift]
+- 四篇公告构成 OSI→Apache Ossie 的外部叙事与演化时间线（发布 → 工作组规模扩大 → 规范上线 → 更名入孵），是 [官网 Updates 索引](ossie-website.md) 所列外链的原文。[^launch]
+- MetricFlow 作为参考实现，与 [转换器生态](ossie-converter-ecosystem.md) 中 dbt converter（MetricFlow Semantic Interface）直接相关。[^expands]
+- "SQL Dialect / 表达式语言" 的规范化努力（[核心规范页](ossie-core-spec.md)）呼应 Salesforce 的"Native query logic"。 [^sf-drift]
 
 [^expands]: OSI 扩展伙伴与首次工作组会议（2025-11-13）
 [^launch]: Snowflake 发布日主公告（2025-09-23）

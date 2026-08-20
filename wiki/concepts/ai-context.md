@@ -24,8 +24,8 @@ stale_after: 2027-01-01
 这些字段只是**可传递的上下文元数据**，不自动构成权限控制或防幻觉机制。路线图中的 verified queries、暴露控制、认证与治理钩子尚未完全落地；生产系统的硬约束仍需落在查询网关、数据权限与结果校验层。[^juejin-ossie]
 
 ## 相关概念
-- [语义层](/concepts/semantic-layer.md)
-- [语义元数据交换](/concepts/semantic-metadata-interchange.md)
-- [Apache Ossie](/entities/apache-ossie.md)
+- [语义层](semantic-layer.md)
+- [语义元数据交换](semantic-metadata-interchange.md)
+- [Apache Ossie](../entities/apache-ossie.md)
 
 [^juejin-ossie]: 每天一个开源项目#40 Apache Ossie（掘金，2026-07-17）
